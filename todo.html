@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your To-Do List</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <style>
+    body {
+      font-family: 'Lexend', 'Times New Roman';
+      background-color: #f4efe4;
+      color: #f0e6f6;
+      margin: 0;
+      padding: 75px;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background-color: #2c2c2e;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #321503e4;
+    }
+    h1, h2 {
+      color: #e86a0ae6;
+    }
+    form {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background-color: #333;
+      color: #fff;
+      font-size: 1rem;
+    }
+    button {
+      background-color:#e5570b;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      background-color: #1f1f21;
+      margin-bottom: 10px;
+      padding: 12px 15px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    a {
+      color: #e95014c0;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .flash {
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .alert-success {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .alert-danger {
+      background-color: #f44336;
+      color: white;
+    }
+    .alert-info {
+      background-color: #335fc6;
+      color: white;
+    }
+    .logout-link {
+      display: block;
+      margin-top: 30px;
+      text-align: right;
+      color: #e05c0bf4;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .logout-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Your To-Do List</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="post" action="{{ url_for('todo') }}">
+      <input type="text" name="task" placeholder="Enter a new task" required />
+      <button type="submit">Add Task</button>
+    </form>
+
+    <h2>Pending Tasks</h2>
+    {% if pending %}
+      <ul>
+        {% for task in pending %}
+          <li>
+            {{ task.task }}
+            <a href="{{ url_for('complete', task_id=task['_id']) }}">✅ Done</a>
+            <!-- You can add delete or edit links here -->
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No pending tasks! </p>
+    {% endif %}
+
+    <h2>Completed Tasks</h2>
+    {% if completed %}
+      <ul>
+        {% for task in completed %}
+          <li>{{ task.task }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No completed tasks yet.</p>
+    {% endif %}
+
+    <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+  </div>
+</body>
+</html>

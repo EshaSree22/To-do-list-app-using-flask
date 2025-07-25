@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <style>
+    body {
+      font-family: 'Lexend', 'Times New Roman';
+      background-color: #f4efe4;
+      color: #f0e6f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: #2c2c2e;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #321503e4;
+      text-align: center;
+      width: 350px;
+    }
+    h1 {
+      color: #ff80ab;
+      margin-bottom: 20px;
+    }
+    a {
+      display: inline-block;
+      margin: 10px 15px;
+      padding: 12px 20px;
+      background-color: #ff4081;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    a:hover {
+      background-color: #e73370;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome, {{ session.get('username', 'Guest') }}!</h1>
+    <p>Manage your tasks quickly and easily.</p>
+    <a href="{{ url_for('todo') }}">Go to To-Do List</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </div>
+</body>
+</html>
