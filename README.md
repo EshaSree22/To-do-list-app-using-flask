@@ -18,7 +18,11 @@ User-Friendly Interface: The app offers a clean and intuitive user interface, pr
 
 
 🔧 Technologies Used:
+
 Flask – lightweight Python web framework.
+
 MongoDB – NoSQL database for storing user accounts and tasks.
+
 Flask-Bcrypt – to hash passwords securely.
+
 HTML/CSS – for frontend interface and styling.
